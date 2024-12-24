@@ -9,6 +9,9 @@ project(ImGuiLibrary)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# make ImWchar a 32 bits value
+add_compile_definitions(IMGUI_USE_WCHAR32)
+
 # user variables
 set(GLFW_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../glfw/${CHAOS_BUILD_TYPE}" CACHE PATH "Path to the GLFW installation")
 
@@ -54,20 +57,18 @@ target_link_libraries(ImGui PUBLIC
     OpenGL::GL
 )
 
-
-
-# Installer la bibliothèque statique
+# install static library
 install(TARGETS ImGui
     ARCHIVE DESTINATION lib  # Pour la bibliothèque statique
 )
 
-# Installer les fichiers d'en-tête d'ImGui
+# install headers
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
     DESTINATION include/imgui
     FILES_MATCHING PATTERN "*.h"
 )
 
-# Installer les backends (GLFW, OpenGL)
+# install backends (GLFW, OpenGL)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/backends/
     DESTINATION include/imgui/backends
     FILES_MATCHING PATTERN "*.h"
